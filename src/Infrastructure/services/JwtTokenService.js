@@ -20,4 +20,12 @@ export class JwtTokenService {
       expiresIn: env.jwtRefreshExpiration,
     });
   }
+
+  verifyAccessToken(token) {
+    if (!env.jwtSecret) {
+      throw new Error('JWT_SECRET is not defined in environment variables');
+    }
+
+    return jwt.verify(token, env.jwtSecret);
+  }
 }

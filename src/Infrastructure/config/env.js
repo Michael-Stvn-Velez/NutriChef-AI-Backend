@@ -17,4 +17,7 @@ export const env = {
   gmailFrom: process.env.GMAIL_FROM ?? process.env.GMAIL_USER ?? '',
   passwordResetCodeExpiresMinutes:
     Number(process.env.PASSWORD_RESET_CODE_EXPIRES_MINUTES) || 15,
+  // Gemini (generación de recetas)
+  geminiApiKey: process.env.GEMINI_API_KEY ?? '',
+  geminiModel: process.env.GEMINI_MODEL ?? 'gemini-2.5-flash',
 };
