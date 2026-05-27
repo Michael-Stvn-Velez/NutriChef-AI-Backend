@@ -28,4 +28,13 @@ export class JwtTokenService {
 
     return jwt.verify(token, env.jwtSecret);
   }
+
+  verifyRefreshToken(token) {
+    const secret = env.jwtRefreshSecret || env.jwtSecret;
+    if (!secret) {
+      throw new Error('JWT_REFRESH_SECRET or JWT_SECRET must be defined');
+    }
+
+    return jwt.verify(token, secret);
+  }
 }

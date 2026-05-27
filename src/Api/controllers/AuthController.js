@@ -3,12 +3,14 @@ export class AuthController {
     registerUserUseCase,
     loginUserUseCase,
     requestForgotPasswordUseCase,
-    resetPasswordUseCase
+    resetPasswordUseCase,
+    refreshTokenUseCase
   ) {
     this.registerUserUseCase = registerUserUseCase;
     this.loginUserUseCase = loginUserUseCase;
     this.requestForgotPasswordUseCase = requestForgotPasswordUseCase;
     this.resetPasswordUseCase = resetPasswordUseCase;
+    this.refreshTokenUseCase = refreshTokenUseCase;
   }
 
   register = async (req, res) => {
@@ -67,6 +69,16 @@ export class AuthController {
     res.status(200).json({
       success: true,
       data: result,
+    });
+  };
+
+  refreshToken = async (req, res) => {
+    const { refreshToken } = req.body;
+    const tokens = await this.refreshTokenUseCase.execute(refreshToken);
+
+    res.status(200).json({
+      success: true,
+      data: tokens,
     });
   };
 }

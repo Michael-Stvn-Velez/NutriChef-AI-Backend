@@ -3,6 +3,7 @@ import { RegisterUserUseCase } from './Application/useCases/Auth/RegisterUserUse
 import { LoginUserUseCase } from './Application/useCases/Auth/LoginUserUseCase.js';
 import { RequestForgotPasswordUseCase } from './Application/useCases/Auth/RequestForgotPasswordUseCase.js';
 import { ResetPasswordUseCase } from './Application/useCases/Auth/ResetPasswordUseCase.js';
+import { RefreshTokenUseCase } from './Application/useCases/Auth/RefreshTokenUseCase.js';
 import { CreateRecipeUseCase } from './Application/useCases/Recipe/CreateRecipeUseCase.js';
 import { ListRecipesUseCase } from './Application/useCases/Recipe/ListRecipesUseCase.js';
 import { GetRecipeByIdUseCase } from './Application/useCases/Recipe/GetRecipeByIdUseCase.js';
@@ -54,6 +55,7 @@ async function bootstrap() {
       env.passwordResetCodeExpiresMinutes
     );
     const resetPasswordUseCase = new ResetPasswordUseCase(forgotPasswordRepository);
+    const refreshTokenUseCase = new RefreshTokenUseCase(tokenService);
 
     const createRecipeUseCase = new CreateRecipeUseCase(
       userRecipeRepository,
@@ -67,7 +69,8 @@ async function bootstrap() {
       registerUserUseCase,
       loginUserUseCase,
       requestForgotPasswordUseCase,
-      resetPasswordUseCase
+      resetPasswordUseCase,
+      refreshTokenUseCase
     );
 
     const recipeController = new RecipeController(
@@ -89,6 +92,7 @@ async function bootstrap() {
       console.log(`Servidor escuchando en http://localhost:${env.port}`);
       console.log(`Register:        POST http://localhost:${env.port}/api/auth/register`);
       console.log(`Login:           POST http://localhost:${env.port}/api/auth/login`);
+      console.log(`Refresh token:   POST http://localhost:${env.port}/api/auth/refresh`);
       console.log(`Forgot password: POST http://localhost:${env.port}/api/auth/forgot-password`);
       console.log(`Reset password:  POST http://localhost:${env.port}/api/auth/reset-password`);
       console.log(`Create recipe:   POST http://localhost:${env.port}/api/recipes (auth)`);
